@@ -4,8 +4,9 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
+
+@Component(modules = {AppModule.class, MainPresenterModule.class})
 @Singleton
-@Component(modules = AppModule.class)
 public interface AppComponent {
 
 }

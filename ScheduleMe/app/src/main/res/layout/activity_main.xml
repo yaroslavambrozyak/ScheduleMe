@@ -8,9 +8,7 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.study.yaroslavambrozyak.scheduleme.view.MainActivity">
@@ -29,7 +27,12 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/content_main" />
+        <fragment
+            android:id="@+id/fragment_remind"
+            class="com.study.yaroslavambrozyak.scheduleme.view.MainFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
