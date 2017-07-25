@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface MainInteractor {
     List<Remind> getReminds();
+    void addRemind(Remind remind);
 }

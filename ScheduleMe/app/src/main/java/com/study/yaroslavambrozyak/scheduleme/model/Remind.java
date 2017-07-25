@@ -1,19 +1,25 @@
 package com.study.yaroslavambrozyak.scheduleme.model;
 
 
-public class Remind {
+import java.util.Date;
+
+import io.realm.RealmObject;
+
+public class Remind extends RealmObject {
 
     private long id;
     private String title;
-    private String descripton;
+    private String description;
+    private Date date;
 
     public Remind() {
     }
 
-    public Remind(long id, String title, String descripton) {
+    public Remind(long id, String title, String description,Date date) {
         this.id = id;
         this.title = title;
-        this.descripton = descripton;
+        this.description = description;
+        this.date = date;
     }
 
     public long getId() {
@@ -32,11 +38,19 @@ public class Remind {
         this.title = title;
     }
 
-    public String getDescripton() {
-        return descripton;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescripton(String descripton) {
-        this.descripton = descripton;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

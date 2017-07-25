@@ -9,4 +9,6 @@
     <dimen name="card_remind_margin_top">8dp</dimen>
     <dimen name="card_remind_margin_bot">8dp</dimen>
     <dimen name="card_remind_margin_right">8dp</dimen>
+    <dimen name="card_between_margin_bottom">5dp</dimen>
+    <dimen name="dialog_new_remind_text_size">20sp</dimen>
 </resources>

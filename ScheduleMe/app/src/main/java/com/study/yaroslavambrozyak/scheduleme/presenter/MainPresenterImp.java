@@ -3,8 +3,11 @@ package com.study.yaroslavambrozyak.scheduleme.presenter;
 
 import com.study.yaroslavambrozyak.scheduleme.interactor.MainInteractorImp;
 import com.study.yaroslavambrozyak.scheduleme.interactor.interfaces.MainInteractor;
+import com.study.yaroslavambrozyak.scheduleme.model.Remind;
 import com.study.yaroslavambrozyak.scheduleme.presenter.interfaces.MainPresenter;
 import com.study.yaroslavambrozyak.scheduleme.view.interfaces.MainView;
+
+import java.util.List;
 
 public class MainPresenterImp implements MainPresenter {
 
@@ -17,8 +20,16 @@ public class MainPresenterImp implements MainPresenter {
     }
 
     @Override
-    public void getReminds() {
-        view.setReminds(interactor.getReminds());
-        view.showMessage("done");
+    public List<Remind> getReminds() {
+        view.showProgress();
+        List<Remind> reminds = interactor.getReminds();
+        view.hideProgress();
+        return reminds;
+    }
+
+    @Override
+    public void addRemind(Remind remind) {
+        interactor.addRemind(remind);
+        getReminds();
     }
 }

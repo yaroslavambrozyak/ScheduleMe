@@ -6,4 +6,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="dialog_new_remind">Нове Сповіщення</string>
+    <string name="dialog_create_remind_title">Заголовок</string>
+    <string name="dialog_create_remind_description">Опис</string>
+    <string name="dialog_create_remind_button">Створити</string>
 </resources>

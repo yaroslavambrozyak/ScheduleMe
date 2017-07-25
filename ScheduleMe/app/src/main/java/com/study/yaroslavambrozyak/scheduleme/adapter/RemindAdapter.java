@@ -7,16 +7,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.study.yaroslavambrozyak.scheduleme.App;
+
 import com.study.yaroslavambrozyak.scheduleme.R;
 import com.study.yaroslavambrozyak.scheduleme.model.Remind;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder> {
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 
-    private List<Remind> remindList;
+public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder>{
 
-    public RemindAdapter(List<Remind> remindList) {
+    private RealmResults<Remind> remindList;
+
+    public RemindAdapter(RealmResults<Remind> remindList) {
         this.remindList = remindList;
     }
 
@@ -29,8 +35,11 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Remind remind = remindList.get(position);
+        SimpleDateFormat simpleDateFormat = App.getApp().getSimpleDateFormat();
         holder.title.setText(remind.getTitle());
-        holder.description.setText(remind.getDescripton());
+        holder.description.setText(remind.getDescription());
+        holder.date.setText(simpleDateFormat.format(remind.getDate()));
+
     }
 
     @Override
@@ -42,11 +51,13 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
 
         TextView title;
         TextView description;
+        TextView date;
 
         public ViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.remind_title);
             description = (TextView) itemView.findViewById(R.id.remind_description);
+            date = (TextView) itemView.findViewById(R.id.remind_date);
         }
     }
 

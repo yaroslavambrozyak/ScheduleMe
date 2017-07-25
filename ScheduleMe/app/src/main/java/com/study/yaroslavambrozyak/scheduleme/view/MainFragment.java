@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.study.yaroslavambrozyak.scheduleme.App;
 import com.study.yaroslavambrozyak.scheduleme.R;
 import com.study.yaroslavambrozyak.scheduleme.adapter.RemindAdapter;
 import com.study.yaroslavambrozyak.scheduleme.model.Remind;
@@ -26,6 +27,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 
 public class MainFragment extends Fragment implements MainView {
 
@@ -35,9 +39,9 @@ public class MainFragment extends Fragment implements MainView {
     ProgressBar progressBar;
 
     //todo try to inject next time!
-    private MainPresenter presenter;
-    private List<Remind> reminds;
+    MainPresenter presenter;
     private Context context;
+    private Realm realm;
 
     public MainFragment(){}
 
@@ -51,7 +55,13 @@ public class MainFragment extends Fragment implements MainView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new MainPresenterImp(this);
-        reminds = new ArrayList<>();
+        realm = Realm.getInstance(context);
+        realm.addChangeListener(new RealmChangeListener() {
+            @Override
+            public void onChange() {
+                recyclerView.getAdapter().notifyDataSetChanged();
+            }
+        });
     }
 
     @Nullable
@@ -60,14 +70,7 @@ public class MainFragment extends Fragment implements MainView {
         View view = inflater.inflate(R.layout.fragment_main,container,false);
         ButterKnife.bind(this,view);
         initRecyclerView();
-        getReminds();
         return view;
-    }
-
-    @Override
-    public void setReminds(List<Remind> remindsData) {
-        reminds.addAll(remindsData);
-        recyclerView.getAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -85,13 +88,14 @@ public class MainFragment extends Fragment implements MainView {
         Toast.makeText(context,message,Toast.LENGTH_LONG).show();
     }
 
-    private void getReminds(){
-        presenter.getReminds();
+    private RealmResults<Remind> getReminds(){
+        return realm.allObjects(Remind.class);
+        /*presenter.getReminds();*/
     }
 
     private void initRecyclerView() {
         RecyclerView.LayoutManager manager = new LinearLayoutManager(context);
-        RecyclerView.Adapter adapter = new RemindAdapter(reminds);
+        RecyclerView.Adapter adapter = new RemindAdapter(getReminds());
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
     }
