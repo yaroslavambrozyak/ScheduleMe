@@ -17,5 +17,5 @@
         android:layout_height="wrap_content"
         android:hint="@string/dialog_create_remind_description"
         android:inputType="text" />
-    
+
 </LinearLayout>

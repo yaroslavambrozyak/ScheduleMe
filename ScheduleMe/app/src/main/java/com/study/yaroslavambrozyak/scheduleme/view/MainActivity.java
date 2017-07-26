@@ -1,10 +1,9 @@
 package com.study.yaroslavambrozyak.scheduleme.view;
 
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,9 +18,6 @@ import android.widget.EditText;
 
 import com.study.yaroslavambrozyak.scheduleme.R;
 import com.study.yaroslavambrozyak.scheduleme.model.Remind;
-import com.study.yaroslavambrozyak.scheduleme.view.interfaces.MainView;
-
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,9 +31,8 @@ public class MainActivity extends AppCompatActivity
     Toolbar toolbar;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
-
-    private MainFragment fragment;
-
+    @BindView(R.id.fab)
+    FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +40,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initUI();
-        fragment = new MainFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_remind, fragment).commit();
     }
 
     @Override
@@ -88,7 +81,7 @@ public class MainActivity extends AppCompatActivity
     @OnClick(R.id.fab)
     public void onFloatingButtonClick(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View dialog = getLayoutInflater().inflate(R.layout.dialog_add_remind,null);
+        View dialog = getLayoutInflater().inflate(R.layout.dialog_add_remind, null);
         builder.setView(dialog);
         final EditText title = (EditText) dialog.findViewById(R.id.create_title);
         final EditText description = (EditText) dialog.findViewById(R.id.create_description);
@@ -106,6 +99,11 @@ public class MainActivity extends AppCompatActivity
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+
+    }
+
+    public FloatingActionButton getFloatingActionButton() {
+        return floatingActionButton;
     }
 
     private void initUI() {

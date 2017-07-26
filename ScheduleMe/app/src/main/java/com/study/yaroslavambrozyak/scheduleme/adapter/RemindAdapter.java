@@ -39,7 +39,6 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
         holder.title.setText(remind.getTitle());
         holder.description.setText(remind.getDescription());
         holder.date.setText(simpleDateFormat.format(remind.getDate()));
-
     }
 
     @Override
@@ -60,5 +59,4 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
             date = (TextView) itemView.findViewById(R.id.remind_date);
         }
     }
-
 }
