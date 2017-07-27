@@ -18,12 +18,15 @@ import java.util.List;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
-public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder>{
+public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder> implements RealmChangeListener{
 
     private RealmResults<Remind> remindList;
+    private RecyclerView recyclerView;
 
-    public RemindAdapter(RealmResults<Remind> remindList) {
+    public RemindAdapter(RealmResults<Remind> remindList,RecyclerView recyclerView) {
         this.remindList = remindList;
+        this.recyclerView = recyclerView;
+        App.getApp().getRealm().addChangeListener(this);
     }
 
     @Override
@@ -44,6 +47,12 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return remindList.size();
+    }
+
+    @Override
+    public void onChange() {
+        notifyDataSetChanged();
+        recyclerView.scrollToPosition(remindList.size()-1);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

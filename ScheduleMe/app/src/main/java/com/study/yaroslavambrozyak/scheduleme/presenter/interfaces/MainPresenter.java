@@ -3,9 +3,12 @@ package com.study.yaroslavambrozyak.scheduleme.presenter.interfaces;
 
 import com.study.yaroslavambrozyak.scheduleme.model.Remind;
 
+import java.util.Date;
 import java.util.List;
 
+import io.realm.RealmResults;
+
 public interface MainPresenter {
-    List<Remind> getReminds();
-    void addRemind(Remind remind);
+    RealmResults<Remind> getReminds();
+    void addRemind(String title,String description,Date date);
 }

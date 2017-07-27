@@ -36,7 +36,7 @@ public class MainFragment extends Fragment implements MainView {
     //todo try to inject next time!
     MainPresenter presenter;
     private Context context;
-    private Realm realm;
+
 
     public MainFragment() {
     }
@@ -51,13 +51,6 @@ public class MainFragment extends Fragment implements MainView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new MainPresenterImp(this);
-        realm = Realm.getInstance(context);
-        realm.addChangeListener(new RealmChangeListener() {
-            @Override
-            public void onChange() {
-                recyclerView.getAdapter().notifyDataSetChanged();
-            }
-        });
     }
 
     @Nullable
@@ -85,21 +78,21 @@ public class MainFragment extends Fragment implements MainView {
     }
 
     private RealmResults<Remind> getReminds() {
-        return realm.allObjects(Remind.class);
+        return presenter.getReminds();
     }
 
     private void initRecyclerView() {
         RecyclerView.LayoutManager manager = new LinearLayoutManager(context);
-        RecyclerView.Adapter adapter = new RemindAdapter(getReminds());
+        RecyclerView.Adapter adapter = new RemindAdapter(getReminds(),recyclerView);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState==RecyclerView.SCROLL_STATE_IDLE)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE)
                     showFloatButton();
-                super.onScrollStateChanged(recyclerView,newState);
+                super.onScrollStateChanged(recyclerView, newState);
             }
 
             @Override
@@ -110,11 +103,11 @@ public class MainFragment extends Fragment implements MainView {
         });
     }
 
-    private void hideFloatButton(){
+    private void hideFloatButton() {
         ((MainActivity) getActivity()).getFloatingActionButton().hide();
     }
 
-    private void showFloatButton(){
+    private void showFloatButton() {
         ((MainActivity) getActivity()).getFloatingActionButton().show();
     }
 

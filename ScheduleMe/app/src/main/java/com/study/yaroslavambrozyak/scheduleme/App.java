@@ -3,6 +3,7 @@ package com.study.yaroslavambrozyak.scheduleme;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.util.Log;
 
 
 import com.study.yaroslavambrozyak.scheduleme.modul.AppComponent;
@@ -19,14 +20,17 @@ public class App extends Application {
     private static App app;
     private AppComponent appComponent;
     private SimpleDateFormat dateFormat;
+    private Realm realm;
 
     @SuppressLint("SimpleDateFormat")
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.d("CreateApp","CreateApp");
         app = this;
         appComponent = createComponent();
         dateFormat = new SimpleDateFormat("dd:MM:yyyy");
+        realm = Realm.getInstance(this);
     }
 
     public static App getApp() {
@@ -35,6 +39,10 @@ public class App extends Application {
 
     public AppComponent getComponent() {
         return appComponent;
+    }
+
+    public Realm getRealm(){
+        return realm;
     }
 
     @SuppressLint("SimpleDateFormat")
