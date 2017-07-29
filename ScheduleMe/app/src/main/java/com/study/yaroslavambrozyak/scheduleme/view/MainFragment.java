@@ -83,7 +83,7 @@ public class MainFragment extends Fragment implements MainView {
 
     private void initRecyclerView() {
         RecyclerView.LayoutManager manager = new LinearLayoutManager(context);
-        RecyclerView.Adapter adapter = new RemindAdapter(getReminds(),recyclerView);
+        RecyclerView.Adapter adapter = new RemindAdapter(getReminds(),recyclerView,presenter);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

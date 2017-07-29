@@ -11,4 +11,5 @@ import io.realm.RealmResults;
 public interface MainPresenter {
     RealmResults<Remind> getReminds();
     void addRemind(String title,String description,Date date);
+    void removeRemind(long id);
 }

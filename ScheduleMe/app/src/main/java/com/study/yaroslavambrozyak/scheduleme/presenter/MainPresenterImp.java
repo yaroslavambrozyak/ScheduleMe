@@ -46,4 +46,11 @@ public class MainPresenterImp implements MainPresenter {
         realm.commitTransaction();
         //getReminds();
     }
+
+    @Override
+    public void removeRemind(long id) {
+        realm.beginTransaction();
+        realm.where(Remind.class).equalTo("id",id).findAll().clear();
+        realm.commitTransaction();
+    }
 }

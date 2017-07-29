@@ -11,13 +11,19 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.study.yaroslavambrozyak.scheduleme.App;
 import com.study.yaroslavambrozyak.scheduleme.R;
+import com.study.yaroslavambrozyak.scheduleme.model.Remind;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmQuery;
 
 public abstract class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -53,6 +59,11 @@ public abstract class BaseActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_settings) {
+            /*Realm realm = App.getApp().getRealm();
+            realm.beginTransaction();
+            RealmQuery<Remind> id = realm.where(Remind.class).equalTo("id", 1);
+            id.findAll().clear();
+            realm.commitTransaction();*/
             return true;
         }
         return super.onOptionsItemSelected(item);
