@@ -12,4 +12,5 @@
     <string name="dialog_create_remind_button">Створити</string>
     <string name="activity_main_title">Нагадування</string>
     <string name="title_activity_create_remind">CreateRemindActivity</string>
+    <string name="empty_list_text">У вас немає сповіщень.\nСпробуйте додати нові</string>
 </resources>

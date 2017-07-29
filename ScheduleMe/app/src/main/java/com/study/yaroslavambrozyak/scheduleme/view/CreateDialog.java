@@ -70,7 +70,7 @@ public class CreateDialog extends DialogFragment
         calendar = Calendar.getInstance();
         calendar.set(year, month, dayOfMonth);
         @SuppressLint("DefaultLocale")
-        String date = String.format("%d:%d:%d", dayOfMonth, month + 1, year);
+        String date = String.format("%d:%02d:%d", dayOfMonth, month + 1, year);
         textViewDate.setText(date);
     }
 

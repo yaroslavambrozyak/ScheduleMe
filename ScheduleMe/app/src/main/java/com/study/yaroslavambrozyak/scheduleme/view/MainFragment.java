@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.study.yaroslavambrozyak.scheduleme.R;
@@ -30,8 +31,8 @@ public class MainFragment extends Fragment implements MainView {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
+    @BindView(R.id.text_empty_list)
+    TextView textEmptyList;
 
     //todo try to inject next time!
     MainPresenter presenter;
@@ -63,18 +64,18 @@ public class MainFragment extends Fragment implements MainView {
     }
 
     @Override
-    public void showProgress() {
-        progressBar.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideProgress() {
-        progressBar.setVisibility(View.GONE);
-    }
-
-    @Override
     public void showMessage(String message) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showMessageEmptyList() {
+        textEmptyList.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideMessageEmptyList() {
+        textEmptyList.setVisibility(View.GONE);
     }
 
     private RealmResults<Remind> getReminds() {
@@ -83,7 +84,7 @@ public class MainFragment extends Fragment implements MainView {
 
     private void initRecyclerView() {
         RecyclerView.LayoutManager manager = new LinearLayoutManager(context);
-        RecyclerView.Adapter adapter = new RemindAdapter(getReminds(),recyclerView,presenter);
+        RecyclerView.Adapter adapter = new RemindAdapter(getReminds(), recyclerView, presenter);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

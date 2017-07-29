@@ -28,10 +28,7 @@ public class MainPresenterImp implements MainPresenter {
 
     @Override
     public RealmResults<Remind> getReminds() {
-        view.showProgress();
-        RealmResults<Remind> reminds = realm.allObjects(Remind.class);
-        view.hideProgress();
-        return reminds;
+        return realm.allObjects(Remind.class);
     }
 
     @Override
