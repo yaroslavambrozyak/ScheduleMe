@@ -1,18 +1,22 @@
 package com.study.yaroslavambrozyak.scheduleme.view;
 
-import android.app.DialogFragment;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 
+import com.study.yaroslavambrozyak.scheduleme.AlarmReceiver;
+import com.study.yaroslavambrozyak.scheduleme.App;
 import com.study.yaroslavambrozyak.scheduleme.R;
-import com.study.yaroslavambrozyak.scheduleme.presenter.MainPresenterImp;
 import com.study.yaroslavambrozyak.scheduleme.presenter.interfaces.MainPresenter;
+
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -33,7 +37,6 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initUI();
-        // todo try to inject presenter
         FragmentManager fragmentManager = getSupportFragmentManager();
         MainFragment fragmentById = (MainFragment) fragmentManager.findFragmentById(R.id.fragment_remind);
         presenter = fragmentById.presenter;

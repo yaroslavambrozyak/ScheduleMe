@@ -2,20 +2,24 @@ package com.study.yaroslavambrozyak.scheduleme.view;
 
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.study.yaroslavambrozyak.scheduleme.AlarmReceiver;
 import com.study.yaroslavambrozyak.scheduleme.App;
 import com.study.yaroslavambrozyak.scheduleme.R;
-import com.study.yaroslavambrozyak.scheduleme.model.Remind;
 import com.study.yaroslavambrozyak.scheduleme.presenter.interfaces.MainPresenter;
 import com.study.yaroslavambrozyak.scheduleme.view.interfaces.DateSetter;
+import com.study.yaroslavambrozyak.scheduleme.view.interfaces.TimeSetter;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -23,10 +27,9 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.realm.Realm;
 
 public class CreateDialog extends DialogFragment
-        implements DialogInterface.OnClickListener, DateSetter {
+        implements DialogInterface.OnClickListener, DateSetter, TimeSetter {
 
 
     @BindView(R.id.edit_create_title)
@@ -35,9 +38,17 @@ public class CreateDialog extends DialogFragment
     EditText editDescription;
     @BindView(R.id.text_date)
     TextView textViewDate;
+    @BindView(R.id.text_clock)
+    TextView textViewTime;
 
     private MainPresenter presenter;
     private Calendar calendar;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        calendar = App.getApp().getCalendar();
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -56,25 +67,43 @@ public class CreateDialog extends DialogFragment
         String description = editDescription.getText().toString();
         Date date = calendar.getTime();
         presenter.addRemind(title,description,date);
+        Intent intent = new Intent(getActivity(), AlarmReceiver.class);
+        PendingIntent pint = PendingIntent.getBroadcast(getActivity(),1,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager manager = App.getApp().getAlarmManager();
+        manager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pint);
     }
 
     @OnClick(R.id.text_date)
     public void onTextDateClick() {
-        DatePickerDialog dialog = new DatePickerDialog();
+        DatePickerDialogFragment dialog = new DatePickerDialogFragment();
         dialog.setDateSetter(this);
         dialog.show(getFragmentManager(), "createDialog");
     }
 
+    @OnClick(R.id.text_clock)
+    public void onTextTimeClick(){
+        TimePickerDialogFragment dialog = new TimePickerDialogFragment();
+        dialog.setTimeSetter(this);
+        dialog.show(getFragmentManager(),"createDialog");
+    }
+
     @Override
     public void setDate(int year, int month, int dayOfMonth) {
-        calendar = Calendar.getInstance();
-        calendar.set(year, month, dayOfMonth);
         @SuppressLint("DefaultLocale")
-        String date = String.format("%d:%02d:%d", dayOfMonth, month + 1, year);
+        String date = String.format("%02d-%02d-%d", dayOfMonth, month + 1, year);
         textViewDate.setText(date);
     }
 
     public void setPresenter(MainPresenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public void setTime(int hourOfDay, int minute) {
+        calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
+        calendar.set(Calendar.MINUTE,minute);
+        @SuppressLint("DefaultLocale")
+        String time = String.format("%d:%d",hourOfDay,minute);
+        textViewTime.setText(time);
     }
 }
