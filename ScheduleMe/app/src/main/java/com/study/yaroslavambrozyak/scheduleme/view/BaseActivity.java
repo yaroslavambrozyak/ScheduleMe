@@ -59,11 +59,7 @@ public abstract class BaseActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_settings) {
-            /*Realm realm = App.getApp().getRealm();
-            realm.beginTransaction();
-            RealmQuery<Remind> id = realm.where(Remind.class).equalTo("id", 1);
-            id.findAll().clear();
-            realm.commitTransaction();*/
+            // next
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -44,7 +44,7 @@ public class MainPresenterImp implements MainPresenter {
     public void addRemind(String title, String description, Date date) {
         realm.beginTransaction();
         Remind remind = realm.createObject(Remind.class);
-        long id = realm.where(Remind.class).maximumInt("id") + 1;
+        long id = realm.where(Remind.class).maximumInt(Constant.USER_ID) + 1;
         remind.setId(id);
         remind.setTitle(title);
         remind.setDescription(description);
@@ -56,7 +56,7 @@ public class MainPresenterImp implements MainPresenter {
     @Override
     public void removeRemind(long id) {
         realm.beginTransaction();
-        RealmResults<Remind> remind = realm.where(Remind.class).equalTo("id", id).findAll();
+        RealmResults<Remind> remind = realm.where(Remind.class).equalTo(Constant.USER_ID, id).findAll();
         removeAlarm(remind.first().getId(), remind.first().getTitle(), remind.first().getDescription());
         remind.clear();
         realm.commitTransaction();

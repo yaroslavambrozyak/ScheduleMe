@@ -25,6 +25,8 @@ public class MainActivity extends BaseActivity {
 
     private MainPresenter presenter;
 
+    private static final String TAG = "mainTag";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +47,7 @@ public class MainActivity extends BaseActivity {
     public void onFloatingButtonClick(View view) {
         CreateDialog dialogFragment = new CreateDialog();
         dialogFragment.setPresenter(presenter);
-        dialogFragment.show(getFragmentManager(),"createFragment");
+        dialogFragment.show(getFragmentManager(),TAG);
     }
 
     public FloatingActionButton getFloatingActionButton() {

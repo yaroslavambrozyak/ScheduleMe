@@ -44,6 +44,7 @@ public class CreateDialog extends DialogFragment
 
     private MainPresenter presenter;
     private Calendar calendar;
+    private static final String TAG = "createTag";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,14 +75,14 @@ public class CreateDialog extends DialogFragment
     public void onTextDateClick() {
         DatePickerDialogFragment dialog = new DatePickerDialogFragment();
         dialog.setDateSetter(this);
-        dialog.show(getFragmentManager(), "createDialog");
+        dialog.show(getFragmentManager(), TAG);
     }
 
     @OnClick(R.id.text_clock)
     public void onTextTimeClick(){
         TimePickerDialogFragment dialog = new TimePickerDialogFragment();
         dialog.setTimeSetter(this);
-        dialog.show(getFragmentManager(),"createDialog");
+        dialog.show(getFragmentManager(),TAG);
     }
 
     @Override
