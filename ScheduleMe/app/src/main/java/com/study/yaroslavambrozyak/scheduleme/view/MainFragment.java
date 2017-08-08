@@ -78,13 +78,18 @@ public class MainFragment extends Fragment implements MainView {
         textEmptyList.setVisibility(View.GONE);
     }
 
+    @Override
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
+
     private RealmResults<Remind> getReminds() {
         return presenter.getReminds();
     }
 
     private void initRecyclerView() {
         RecyclerView.LayoutManager manager = new LinearLayoutManager(context);
-        RecyclerView.Adapter adapter = new RemindAdapter(getReminds(), recyclerView, presenter);
+        RecyclerView.Adapter adapter = new RemindAdapter(getReminds(), this, presenter);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

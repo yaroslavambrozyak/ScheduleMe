@@ -14,10 +14,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.study.yaroslavambrozyak.scheduleme.AlarmReceiver;
+import com.study.yaroslavambrozyak.scheduleme.utils.AlarmReceiver;
 import com.study.yaroslavambrozyak.scheduleme.App;
 import com.study.yaroslavambrozyak.scheduleme.R;
 import com.study.yaroslavambrozyak.scheduleme.presenter.interfaces.MainPresenter;
+import com.study.yaroslavambrozyak.scheduleme.utils.Constant;
 import com.study.yaroslavambrozyak.scheduleme.view.interfaces.DateSetter;
 import com.study.yaroslavambrozyak.scheduleme.view.interfaces.TimeSetter;
 
@@ -67,10 +68,6 @@ public class CreateDialog extends DialogFragment
         String description = editDescription.getText().toString();
         Date date = calendar.getTime();
         presenter.addRemind(title,description,date);
-        Intent intent = new Intent(getActivity(), AlarmReceiver.class);
-        PendingIntent pint = PendingIntent.getBroadcast(getActivity(),1,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager manager = App.getApp().getAlarmManager();
-        manager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pint);
     }
 
     @OnClick(R.id.text_date)
@@ -90,7 +87,7 @@ public class CreateDialog extends DialogFragment
     @Override
     public void setDate(int year, int month, int dayOfMonth) {
         @SuppressLint("DefaultLocale")
-        String date = String.format("%02d-%02d-%d", dayOfMonth, month + 1, year);
+        String date = String.format(Constant.DATE_FORMAT, dayOfMonth, month + 1, year);
         textViewDate.setText(date);
     }
 
@@ -103,7 +100,7 @@ public class CreateDialog extends DialogFragment
         calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
         calendar.set(Calendar.MINUTE,minute);
         @SuppressLint("DefaultLocale")
-        String time = String.format("%d:%d",hourOfDay,minute);
+        String time = String.format(Constant.TIME_FORMAT,hourOfDay,minute);
         textViewTime.setText(time);
     }
 }

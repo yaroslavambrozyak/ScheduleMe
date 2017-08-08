@@ -17,6 +17,7 @@ import com.study.yaroslavambrozyak.scheduleme.App;
 import com.study.yaroslavambrozyak.scheduleme.R;
 import com.study.yaroslavambrozyak.scheduleme.model.Remind;
 import com.study.yaroslavambrozyak.scheduleme.presenter.interfaces.MainPresenter;
+import com.study.yaroslavambrozyak.scheduleme.view.interfaces.MainView;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -30,13 +31,13 @@ import io.realm.RealmResults;
 public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder> implements RealmChangeListener {
 
     private RealmResults<Remind> remindList;
-    private RecyclerView recyclerView;
+    private MainView view;
     private MainPresenter presenter;
 
-    public RemindAdapter(RealmResults<Remind> remindList, RecyclerView recyclerView, MainPresenter presenter) {
+    public RemindAdapter(RealmResults<Remind> remindList, MainView view, MainPresenter presenter) {
         setHasStableIds(true);
         this.remindList = remindList;
-        this.recyclerView = recyclerView;
+        this.view = view;
         this.presenter = presenter;
         App.getApp().getRealm().addChangeListener(this);
     }
@@ -64,8 +65,12 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
 
     @Override
     public void onChange() {
+        if (remindList.size() == 0)
+            view.showMessageEmptyList();
+        else
+            view.hideMessageEmptyList();
         notifyDataSetChanged();
-        recyclerView.scrollToPosition(remindList.size() - 1);
+        view.getRecyclerView().scrollToPosition(remindList.size() - 1);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -81,7 +86,7 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
 
         public ViewHolder(View itemView, MainPresenter presenter) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
             this.presenter = presenter;
         }
 
@@ -95,7 +100,7 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
 
         @OnClick(R.id.card_button)
         public void onButtonClick(View view) {
-            Context wrapper = new ContextThemeWrapper(App.getApp(),R.style.MyPopupMenu);
+            Context wrapper = new ContextThemeWrapper(App.getApp(), R.style.MyPopupMenu);
             PopupMenu popupMenu = new PopupMenu(wrapper, view);
             popupMenu.inflate(R.menu.menu_change_remind);
             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {

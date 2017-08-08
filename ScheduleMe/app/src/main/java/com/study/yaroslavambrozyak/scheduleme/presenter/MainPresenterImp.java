@@ -1,11 +1,17 @@
 package com.study.yaroslavambrozyak.scheduleme.presenter;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+
 import com.study.yaroslavambrozyak.scheduleme.App;
 import com.study.yaroslavambrozyak.scheduleme.interactor.MainInteractorImp;
 import com.study.yaroslavambrozyak.scheduleme.interactor.interfaces.MainInteractor;
 import com.study.yaroslavambrozyak.scheduleme.model.Remind;
 import com.study.yaroslavambrozyak.scheduleme.presenter.interfaces.MainPresenter;
+import com.study.yaroslavambrozyak.scheduleme.utils.AlarmReceiver;
+import com.study.yaroslavambrozyak.scheduleme.utils.Constant;
 import com.study.yaroslavambrozyak.scheduleme.view.interfaces.MainView;
 
 import java.util.Date;
@@ -28,7 +34,10 @@ public class MainPresenterImp implements MainPresenter {
 
     @Override
     public RealmResults<Remind> getReminds() {
-        return realm.allObjects(Remind.class);
+        RealmResults<Remind> reminds = realm.allObjects(Remind.class);
+        if (reminds.size() == 0)
+            view.showMessageEmptyList();
+        return reminds;
     }
 
     @Override
@@ -41,13 +50,34 @@ public class MainPresenterImp implements MainPresenter {
         remind.setDescription(description);
         remind.setDate(date);
         realm.commitTransaction();
-        //getReminds();
+        createAlarm(id,title, description, date);
     }
 
     @Override
     public void removeRemind(long id) {
         realm.beginTransaction();
-        realm.where(Remind.class).equalTo("id",id).findAll().clear();
+        RealmResults<Remind> remind = realm.where(Remind.class).equalTo("id", id).findAll();
+        removeAlarm(remind.first().getId(), remind.first().getTitle(), remind.first().getDescription());
+        remind.clear();
         realm.commitTransaction();
     }
+
+    private void createAlarm(long id,String title, String description, Date date) {
+        Intent intent = new Intent(App.getApp(), AlarmReceiver.class);
+        intent.putExtra(Constant.REMIND_TITLE, title);
+        intent.putExtra(Constant.REMIND_DESCRIPTION, description);
+        PendingIntent pint = PendingIntent.getBroadcast(App.getApp(), (int) id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager manager = App.getApp().getAlarmManager();
+        manager.set(AlarmManager.RTC_WAKEUP, date.getTime(), pint);
+    }
+
+    private void removeAlarm(long id,String title, String description) {
+        Intent intent = new Intent(App.getApp(), AlarmReceiver.class);
+        intent.putExtra(Constant.REMIND_TITLE, title);
+        intent.putExtra(Constant.REMIND_DESCRIPTION, description);
+        PendingIntent pint = PendingIntent.getBroadcast(App.getApp(), (int) id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager manager = App.getApp().getAlarmManager();
+        manager.cancel(pint);
+    }
+
 }
