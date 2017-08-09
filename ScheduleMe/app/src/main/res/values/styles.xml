@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -20,6 +20,14 @@
     <style name="MyPopupMenu" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:popupBackground">#0F213F</item>
         <item name="android:disabledAlpha">0.5</item>
+    </style>
+
+    <style name="PickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
 </resources>

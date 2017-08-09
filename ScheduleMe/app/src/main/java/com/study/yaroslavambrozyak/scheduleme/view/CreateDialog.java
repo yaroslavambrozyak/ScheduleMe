@@ -2,19 +2,15 @@ package com.study.yaroslavambrozyak.scheduleme.view;
 
 
 import android.annotation.SuppressLint;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.PendingIntent;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.study.yaroslavambrozyak.scheduleme.utils.AlarmReceiver;
 import com.study.yaroslavambrozyak.scheduleme.App;
 import com.study.yaroslavambrozyak.scheduleme.R;
 import com.study.yaroslavambrozyak.scheduleme.presenter.interfaces.MainPresenter;
@@ -68,7 +64,7 @@ public class CreateDialog extends DialogFragment
         String title = editTitle.getText().toString();
         String description = editDescription.getText().toString();
         Date date = calendar.getTime();
-        presenter.addRemind(title,description,date);
+        presenter.addRemind(title, description, date);
     }
 
     @OnClick(R.id.text_date)
@@ -79,10 +75,10 @@ public class CreateDialog extends DialogFragment
     }
 
     @OnClick(R.id.text_clock)
-    public void onTextTimeClick(){
+    public void onTextTimeClick() {
         TimePickerDialogFragment dialog = new TimePickerDialogFragment();
         dialog.setTimeSetter(this);
-        dialog.show(getFragmentManager(),TAG);
+        dialog.show(getFragmentManager(), TAG);
     }
 
     @Override
@@ -98,10 +94,10 @@ public class CreateDialog extends DialogFragment
 
     @Override
     public void setTime(int hourOfDay, int minute) {
-        calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
-        calendar.set(Calendar.MINUTE,minute);
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        calendar.set(Calendar.MINUTE, minute);
         @SuppressLint("DefaultLocale")
-        String time = String.format(Constant.TIME_FORMAT,hourOfDay,minute);
+        String time = String.format(Constant.TIME_FORMAT, hourOfDay, minute);
         textViewTime.setText(time);
     }
 }

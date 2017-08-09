@@ -13,4 +13,5 @@
     <string name="activity_main_title">Нагадування</string>
     <string name="title_activity_create_remind">CreateRemindActivity</string>
     <string name="empty_list_text">У вас немає сповіщень.\nСпробуйте додати нові</string>
+    <string name="text_empty_title">Введіть дані</string>
 </resources>

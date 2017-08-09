@@ -34,7 +34,7 @@ public class MainPresenterImp implements MainPresenter {
 
     @Override
     public RealmResults<Remind> getReminds() {
-        RealmResults<Remind> reminds = realm.allObjects(Remind.class);
+        RealmResults<Remind> reminds = realm.allObjects(Remind.class).sort("date");
         if (reminds.size() == 0)
             view.showMessageEmptyList();
         return reminds;
@@ -50,7 +50,8 @@ public class MainPresenterImp implements MainPresenter {
         remind.setDescription(description);
         remind.setDate(date);
         realm.commitTransaction();
-        createAlarm(id,title, description, date);
+        if (date.after(new Date()))
+            createAlarm(id, title, description, date);
     }
 
     @Override
@@ -62,7 +63,7 @@ public class MainPresenterImp implements MainPresenter {
         realm.commitTransaction();
     }
 
-    private void createAlarm(long id,String title, String description, Date date) {
+    private void createAlarm(long id, String title, String description, Date date) {
         Intent intent = new Intent(App.getApp(), AlarmReceiver.class);
         intent.putExtra(Constant.REMIND_TITLE, title);
         intent.putExtra(Constant.REMIND_DESCRIPTION, description);
@@ -71,7 +72,7 @@ public class MainPresenterImp implements MainPresenter {
         manager.set(AlarmManager.RTC_WAKEUP, date.getTime(), pint);
     }
 
-    private void removeAlarm(long id,String title, String description) {
+    private void removeAlarm(long id, String title, String description) {
         Intent intent = new Intent(App.getApp(), AlarmReceiver.class);
         intent.putExtra(Constant.REMIND_TITLE, title);
         intent.putExtra(Constant.REMIND_DESCRIPTION, description);

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.TimePicker;
 
 import com.study.yaroslavambrozyak.scheduleme.App;
+import com.study.yaroslavambrozyak.scheduleme.R;
 import com.study.yaroslavambrozyak.scheduleme.view.interfaces.TimeSetter;
 
 import java.util.Calendar;
@@ -21,7 +22,7 @@ public class TimePickerDialogFragment extends DialogFragment implements TimePick
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        return new TimePickerDialog(getActivity(),this,hour,minute,true);
+        return new TimePickerDialog(getActivity(), R.style.PickerDialogTheme,this,hour,minute,true);
     }
 
     @Override

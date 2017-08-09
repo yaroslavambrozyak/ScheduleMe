@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.DatePicker;
 
 import com.study.yaroslavambrozyak.scheduleme.App;
+import com.study.yaroslavambrozyak.scheduleme.R;
 import com.study.yaroslavambrozyak.scheduleme.view.interfaces.DateSetter;
 
 import java.util.Calendar;
@@ -23,7 +24,7 @@ public class DatePickerDialogFragment extends DialogFragment implements OnDateSe
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH);
         int year = calendar.get(Calendar.YEAR);
-        return new DatePickerDialog(getActivity(), this,year,month,day);
+        return new DatePickerDialog(getActivity(),R.style.PickerDialogTheme, this,year,month,day);
     }
 
     @Override

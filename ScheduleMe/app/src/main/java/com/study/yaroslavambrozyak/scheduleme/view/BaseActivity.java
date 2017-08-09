@@ -25,15 +25,13 @@ import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 
-public abstract class BaseActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
+public abstract class BaseActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Nullable
-    @BindView(R.id.drawer_layout)
-    DrawerLayout drawer;
+    //@Nullable
+    //@BindView(R.id.drawer_layout)
+    //DrawerLayout drawer;
     @Nullable
     @BindView(R.id.fab)
     FloatingActionButton floatingActionButton;
@@ -47,14 +45,14 @@ public abstract class BaseActivity extends AppCompatActivity
         ButterKnife.bind(this);
     }
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         if (drawer != null && drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -65,46 +63,46 @@ public abstract class BaseActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        final int id = item.getItemId();
-        if (drawer != null) {
-            drawer.closeDrawer(GravityCompat.START);
-        }
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (id == R.id.nav_camera) {
-                    // Handle the camera action
-
-                }
-            }
-        }, DRAWER_CLOSE_DELAY);
-        return true;
-    }
+//    @SuppressWarnings("StatementWithEmptyBody")
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//        final int id = item.getItemId();
+//        if (drawer != null) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        }
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (id == R.id.nav_camera) {
+//                    // Handle the camera action
+//
+//                }
+//            }
+//        }, DRAWER_CLOSE_DELAY);
+//        return true;
+//    }
 
     protected void initUI() {
         initToolbar();
-        initDrawer();
-        initNavigation();
+//        initDrawer();
+//        initNavigation();
     }
 
     protected void initToolbar() {
         setSupportActionBar(toolbar);
     }
 
-    private void initDrawer() {
+    /*private void initDrawer() {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         if (drawer != null) {
             drawer.addDrawerListener(toggle);
         }
         toggle.syncState();
-    }
+    }*/
 
-    private void initNavigation() {
+    /*private void initNavigation() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-    }
+    }*/
 }
