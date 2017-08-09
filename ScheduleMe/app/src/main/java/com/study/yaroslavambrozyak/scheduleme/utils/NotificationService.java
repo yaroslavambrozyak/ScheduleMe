@@ -36,9 +36,12 @@ public class NotificationService extends Service {
         builder.setSmallIcon(R.mipmap.ic_calendar_clock_grey600_24dp);
         builder.setContentTitle(intent.getStringExtra(Constant.REMIND_TITLE));
         builder.setContentText(intent.getStringExtra(Constant.REMIND_DESCRIPTION));
-        builder.setVibrate(new long[]{100, 100, 100, 100, 100});
-        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/sound");
-        builder.setSound(uri);
+        if (intent.getBooleanExtra("vibration", true))
+            builder.setVibrate(new long[]{100, 100, 100, 100, 100});
+        if (intent.getBooleanExtra("music", true)) {
+            Uri uri = Uri.parse("android.resource://" + getPackageName() + "/raw/sound");
+            builder.setSound(uri);
+        }
         Intent intent = new Intent(this, MainActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addParentStack(MainActivity.class);

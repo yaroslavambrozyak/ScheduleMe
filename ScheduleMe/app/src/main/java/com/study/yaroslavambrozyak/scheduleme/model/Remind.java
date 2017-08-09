@@ -11,15 +11,17 @@ public class Remind extends RealmObject {
     private String title;
     private String description;
     private Date date;
+    private RemindSettings remindSettings;
 
     public Remind() {
     }
 
-    public Remind(long id, String title, String description,Date date) {
+    public Remind(long id, String title, String description,Date date,RemindSettings remindSettings) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.date = date;
+        this.remindSettings = remindSettings;
     }
 
     public long getId() {
@@ -52,5 +54,13 @@ public class Remind extends RealmObject {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public RemindSettings getRemindSettings() {
+        return remindSettings;
+    }
+
+    public void setRemindSettings(RemindSettings remindSettings) {
+        this.remindSettings = remindSettings;
     }
 }

@@ -8,11 +8,14 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.study.yaroslavambrozyak.scheduleme.App;
 import com.study.yaroslavambrozyak.scheduleme.R;
+import com.study.yaroslavambrozyak.scheduleme.model.Remind;
+import com.study.yaroslavambrozyak.scheduleme.model.RemindSettings;
 import com.study.yaroslavambrozyak.scheduleme.presenter.interfaces.MainPresenter;
 import com.study.yaroslavambrozyak.scheduleme.utils.Constant;
 import com.study.yaroslavambrozyak.scheduleme.view.interfaces.DateSetter;
@@ -37,6 +40,10 @@ public class CreateDialog extends DialogFragment
     TextView textViewDate;
     @BindView(R.id.text_clock)
     TextView textViewTime;
+    @BindView(R.id.checkbox_music)
+    CheckBox checkBoxMusic;
+    @BindView(R.id.checkbox_vibration)
+    CheckBox checkBoxVibration;
 
     private MainPresenter presenter;
     private Calendar calendar;
@@ -61,10 +68,7 @@ public class CreateDialog extends DialogFragment
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
-        String title = editTitle.getText().toString();
-        String description = editDescription.getText().toString();
-        Date date = calendar.getTime();
-        presenter.addRemind(title, description, date);
+        presenter.addRemind(createRemind(),createRemindSettings());
     }
 
     @OnClick(R.id.text_date)
@@ -99,5 +103,23 @@ public class CreateDialog extends DialogFragment
         @SuppressLint("DefaultLocale")
         String time = String.format(Constant.TIME_FORMAT, hourOfDay, minute);
         textViewTime.setText(time);
+    }
+
+    private Remind createRemind(){
+        String title = editTitle.getText().toString();
+        String description = editDescription.getText().toString();
+        Date date = calendar.getTime();
+        Remind remind = new Remind();
+        remind.setTitle(title);
+        remind.setDescription(description);
+        remind.setDate(date);
+        return remind;
+    }
+
+    private RemindSettings createRemindSettings(){
+        RemindSettings remindSettings = new RemindSettings();
+        remindSettings.setMusicEnable(checkBoxMusic.isChecked());
+        remindSettings.setVibrationEnable(checkBoxVibration.isChecked());
+        return remindSettings;
     }
 }
